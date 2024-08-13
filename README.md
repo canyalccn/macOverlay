@@ -20,7 +20,7 @@ How to use:
 
 Notes:
  
-Shortcut can be changed through the script. You need the overlay_stopped/overlay_activated.png on your desktop if you want the notifications to work.
+Shortcut can be changed through the script. You need the overlay_stopped/overlay_activated.png paths set if you want the notifications to work.
 There is a slight delay for overlay to be applied. Keep in mind that everytime you change a screen mode overlay gets refreshed (to keep it on top)
 
 Known issues:
