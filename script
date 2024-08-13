@@ -1,0 +1,134 @@
+local overlay
+local overlayActivatedTextOverlay
+local overlayStoppedTextOverlay
+local overlayActive = false
+
+local highestWindowLevel = 2147483647  -- Max 32-bit signed integer value
+
+-- Function to create the "Overlay Activated" text overlay
+local function createOverlayActivatedTextOverlay()
+    if overlayActivatedTextOverlay then
+        overlayActivatedTextOverlay:delete()
+        overlayActivatedTextOverlay = nil
+    end
+
+    local screenFrame = hs.screen.primaryScreen():fullFrame()
+    local img = hs.image.imageFromPath("/path/to/your/overlay_activated.png")
+
+    overlayActivatedTextOverlay = hs.canvas.new({ x = screenFrame.x + 20, y = screenFrame.y + 20, w = img:size().w, h = img:size().h })
+        :appendElements({
+            action = "fill",
+            type = "image",
+            image = img,
+            imageAlignment = "center",
+            imageScaling = "scaleToFit",
+        })
+
+    overlayActivatedTextOverlay:level(highestWindowLevel)
+    overlayActivatedTextOverlay:show()
+
+    hs.timer.doAfter(3, function()
+        if overlayActivatedTextOverlay then
+            overlayActivatedTextOverlay:delete()
+            overlayActivatedTextOverlay = nil
+        end
+    end)
+
+    print("Overlay Activated Text Overlay Created")
+end
+
+-- Function to create the "Overlay Stopped" text overlay
+local function createOverlayStoppedTextOverlay()
+    if overlayStoppedTextOverlay then
+        overlayStoppedTextOverlay:delete()
+        overlayStoppedTextOverlay = nil
+    end
+
+    local screenFrame = hs.screen.primaryScreen():fullFrame()
+    local img = hs.image.imageFromPath("/path/to/your/overlay_stopped.png")
+
+    overlayStoppedTextOverlay = hs.canvas.new({ x = screenFrame.x + 20, y = screenFrame.y + 20, w = img:size().w, h = img:size().h })
+        :appendElements({
+            action = "fill",
+            type = "image",
+            image = img,
+            imageAlignment = "center",
+            imageScaling = "scaleToFit",
+        })
+
+    overlayStoppedTextOverlay:level(highestWindowLevel)
+    overlayStoppedTextOverlay:show()
+
+    print("Overlay Stopped Text Overlay Created")
+end
+
+-- Function to create the main overlay
+local function createOverlay()
+    if overlay then
+        overlay:delete()
+        overlay = nil
+    end
+
+    local screenFrame = hs.screen.primaryScreen():fullFrame()
+    local img = hs.image.imageFromPath("/path/to/your/image.png")
+
+    overlay = hs.canvas.new(screenFrame):appendElements({
+        action = "fill",
+        type = "image",
+        image = img,
+        imageAlignment = "topLeft",
+        imageScaling = "scaleToFit",
+    })
+
+    overlay:level(highestWindowLevel - 1)
+    overlay:clickActivating(false)
+    overlay:show()
+
+    print("Overlay Created")
+end
+
+-- Function to activate the overlay
+local function activateOverlay()
+    overlayActive = true
+    createOverlay()
+    createOverlayActivatedTextOverlay()
+    if overlayStoppedTextOverlay then
+        overlayStoppedTextOverlay:delete()
+        overlayStoppedTextOverlay = nil
+    end
+end
+
+-- Function to deactivate the overlay
+local function deactivateOverlay()
+    overlayActive = false
+    if overlay then
+        overlay:delete()
+        overlay = nil
+    end
+    createOverlayStoppedTextOverlay()
+end
+
+-- Watch for screen or space changes
+local function updateOverlayAndTexts()
+    if overlayActive then
+        createOverlay()
+        createOverlayActivatedTextOverlay()
+    else
+        createOverlayStoppedTextOverlay()
+    end
+end
+
+-- Initial state: Show "Overlay Stopped"
+createOverlayStoppedTextOverlay()
+
+hs.screen.watcher.new(updateOverlayAndTexts):start()
+hs.spaces.watcher.new(updateOverlayAndTexts):start()
+
+-- Shortcut to toggle the overlay
+hs.hotkey.bind({"cmd", "alt", "ctrl"}, "O", function()
+    if overlayActive then
+        deactivateOverlay()
+    else
+        activateOverlay()
+    end
+end)
