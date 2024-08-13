@@ -23,9 +23,7 @@ Notes:
 Shortcut can be changed through the script. You need the overlay_stopped/overlay_activated.png paths set if you want the notifications to work.
 There is a slight delay for overlay to be applied. Keep in mind that everytime you change a screen mode overlay gets refreshed (to keep it on top)
 
-Known issues:
-
-Notification PNGs don't show up when on fullscreen and lots of spagetti code.
+Known issues: Notification PNGs don't show up when on fullscreen and lots of spagetti code.
 
 
 I'm just putting this here so that people in need can grab it or develop it even further. I couldn't find such an app which does this the exact thing.
