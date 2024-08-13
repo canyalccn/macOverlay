@@ -26,9 +26,7 @@ There is a slight delay for overlay to be applied. Keep in mind that everytime y
 Known issues:
 
 Notification PNGs don't show up when on fullscreen.
-
-Lots of spagetthi code.
-
+Lots of spagetti code.
 
 
 I'm just putting this here so that people in need can grab it or develop it even further. I couldn't find such an app which does this the exact thing.
