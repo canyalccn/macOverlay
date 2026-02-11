@@ -27,5 +27,3 @@ Known issues: Notification PNGs don't show up when on fullscreen and lots of spa
 
 
 I'm just putting this here so that people in need can grab it or develop it even further. I couldn't find such an app which does this the exact thing.
-
-To be honest I didn't put much effort into this anyway, but it does the job for me. Maybe in future I will look into the script more in detail and consider to turn it to a fully executional app with GUI.
